@@ -54,12 +54,12 @@ export function Footer() {
 
         <div className="border-t border-border/50 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            © 2024 ProdResource. All rights reserved.
+            © 2025 ProdResource. All rights reserved.
           </p>
           <div className="flex items-center space-x-1 text-sm text-muted-foreground mt-4 md:mt-0">
             <span>Made with</span>
             <Heart className="h-4 w-4 text-accent fill-current" />
-            <span>for engineering students</span>
+            <span>for lovely students</span>
           </div>
         </div>
       </div>
