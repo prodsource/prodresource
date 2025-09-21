@@ -17,7 +17,7 @@ export function QuoteSection() {
               கல்வியின் உயர்ந்த நோக்கம் அறிவு அல்ல செயல்
             </p>
             <p className="text-muted-foreground italic">
-              "The higher purpose of education is not knowledge but action."
+              "Nothing more Nothing Less Simply Game Over "
             </p>
           </div>
         </div>
