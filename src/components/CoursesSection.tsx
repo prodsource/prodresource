@@ -14,8 +14,6 @@ interface Course {
 const coursesData: Course[] = [
   { name: "Calculus and its Applications", category: "Mathematics", link: "https://drive.google.com/drive/folders/1gq_SBH1Owa-HKHGm8PBs1Qr4yJJ7IdFZ?usp=drive_link" },
   { name: "Physics", category: "Science", link: "https://drive.google.com/drive/folders/1pFi3H9ZQQLS-Gt8dgD60ZVLkUqhHqJ9q?usp=drive_link" },
-  { name: "Chemistry", category: "Science", link: "https://drive.google.com/drive/folders/1YJJXHZ51FL10OIL_R2dSsN91AoZW9DYs?usp=drive_link" },
-  { name: "Professional Ethics", category: "General", link: "https://drive.google.com/drive/folders/1R6sR5gNKfiwOSiIWbg0uZMRV-aSy37Ki?usp=drive_link" },
   { name: "English Language Proficiency", category: "Language", link: "https://drive.google.com/drive/folders/1rBuLuoM3AV3ronN_hQSCu-kHdbIP1vl9?usp=drive_link" },
   { name: "Engineering Graphics", category: "Engineering", link: "https://drive.google.com/drive/folders/1zUJ_rdBEqx2w3BkqsfSz0A5zJWPsPawO?usp=drive_link" },
   { name: "Basic Sciences Laboratory", category: "Laboratory", link: "https://drive.google.com/drive/folders/1Xv8pmeladVajH6Xgumd7t5F9z7iSkioL?usp=drive_link" },
@@ -152,9 +150,9 @@ export function CoursesSection() {
   const filteredCourses = useMemo(() => {
     return coursesData.filter(course => {
       const matchesSearch = course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           course.category.toLowerCase().includes(searchTerm.toLowerCase());
+        course.category.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === "all" || course.category === selectedCategory;
-      return matchesSearch && matchesCategory && course.link; // Only show courses with links
+      return matchesSearch && matchesCategory && course.link;
     });
   }, [searchTerm, selectedCategory]);
 
@@ -170,8 +168,8 @@ export function CoursesSection() {
           </p>
         </div>
 
-        {/* Search and Filter */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8 max-w-2xl mx-auto">
+        {/* Sticky Search and Filter */}
+        <div className="sticky top-16 z-30 bg-background/90 backdrop-blur rounded-xl shadow-md flex flex-col md:flex-row gap-4 mb-8 max-w-2xl mx-auto px-4 py-4 border border-border/40">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
