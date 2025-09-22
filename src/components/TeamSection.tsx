@@ -33,7 +33,13 @@ const teamMembers = [
     linkedin: "https://www.linkedin.com/in/thaya-nithi-n-d-738261324"
   },
   {
-    name: "Aravind R",
+    name: "Aravind Iniya",
+    role: "Resource Champion",
+    program: "Prod SW 24-29",
+    linkedin: ""
+  },
+    {
+    name: "Devaraj S",
     role: "Resource Champion",
     program: "Prod SW 24-29",
     linkedin: ""
