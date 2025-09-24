@@ -141,6 +141,8 @@ const coursesData: Course[] = [
 export function CoursesSection() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [perPage, setPerPage] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
 
   const categories = useMemo(() => {
     const cats = [...new Set(coursesData.map(course => course.category))];
@@ -155,6 +157,14 @@ export function CoursesSection() {
       return matchesSearch && matchesCategory && course.link;
     });
   }, [searchTerm, selectedCategory]);
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredCourses.length / perPage);
+  const paginatedCourses = filteredCourses.slice((page - 1) * perPage, page * perPage);
+
+  // Reset page when filters change
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useMemo(() => { setPage(1); }, [searchTerm, selectedCategory, perPage]);
 
   return (
     <section id="courses" className="py-20 bg-background">
@@ -197,16 +207,57 @@ export function CoursesSection() {
           </div>
         </div>
 
+        {/* Per Page Selector & Pagination - sticky bottom */}
+        <div className="fixed z-50 bottom-6 right-6 left-6 md:left-auto md:right-12 flex flex-col md:flex-row items-center justify-end gap-4 bg-background/95 backdrop-blur border border-border/40 rounded-xl px-6 py-3 shadow-lg transition-all">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Show per page:</span>
+            <select
+              value={perPage}
+              onChange={e => setPerPage(Number(e.target.value))}
+              className="border rounded px-2 py-1 text-sm bg-background"
+            >
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={100}>100</option>
+            </select>
+          </div>
+
+          {/* Pagination Controls */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPage(1)}
+              disabled={page === 1}
+              className="px-2 py-1 rounded text-sm border bg-background hover:bg-accent disabled:opacity-50"
+            >First</button>
+            <button
+              onClick={() => setPage(page - 1)}
+              disabled={page === 1}
+              className="px-2 py-1 rounded text-sm border bg-background hover:bg-accent disabled:opacity-50"
+            >Prev</button>
+            <span className="text-sm font-medium px-2">Page {page} of {totalPages}</span>
+            <button
+              onClick={() => setPage(page + 1)}
+              disabled={page === totalPages || totalPages === 0}
+              className="px-2 py-1 rounded text-sm border bg-background hover:bg-accent disabled:opacity-50"
+            >Next</button>
+            <button
+              onClick={() => setPage(totalPages)}
+              disabled={page === totalPages || totalPages === 0}
+              className="px-2 py-1 rounded text-sm border bg-background hover:bg-accent disabled:opacity-50"
+            >Last</button>
+          </div>
+        </div>
+
         {/* Course Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredCourses.map((course, index) => (
+          {paginatedCourses.map((course, index) => (
             <div key={`${course.name}-${index}`} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
               <CourseCard course={course} />
             </div>
           ))}
         </div>
 
-        {filteredCourses.length === 0 && (
+        {paginatedCourses.length === 0 && (
           <div className="text-center py-12">
             <p className="text-muted-foreground text-lg">No courses found matching your criteria.</p>
           </div>

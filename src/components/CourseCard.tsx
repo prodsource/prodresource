@@ -31,35 +31,43 @@ export function CourseCard({ course }: CourseCardProps) {
   };
 
   return (
-    <Card className="group h-full bg-gradient-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 border-border/50">
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex-shrink-0">
-            <FolderOpen className="h-8 w-8 text-primary group-hover:text-accent transition-colors" />
+    <Card className="group h-full relative border-none shadow-xl rounded-2xl overflow-hidden bg-white/60 dark:bg-gray-950/60 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+      {/* Decorative blurred gradient background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-10 -left-10 w-32 h-32 bg-gradient-to-br from-primary/30 via-accent/20 to-transparent rounded-full blur-2xl opacity-60" />
+        <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-gradient-to-tr from-secondary/30 via-primary/10 to-transparent rounded-full blur-2xl opacity-40" />
+      </div>
+
+      <CardHeader className="relative z-10 pb-2 pt-6 px-6 flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center justify-center rounded-xl bg-primary/20 p-3 shadow-md transition-transform duration-300 group-hover:scale-110">
+              <FolderOpen className="h-8 w-8 text-primary group-hover:text-accent transition-colors duration-300" />
+            </span>
+            <Badge 
+              variant="secondary" 
+              className={`shadow-sm ${categoryColors[course.category] || categoryColors.General} text-xs font-bold px-3 py-1 rounded-lg border border-border/30 backdrop-blur-sm`}
+            >
+              {course.category}
+            </Badge>
           </div>
-          <Badge 
-            variant="secondary" 
-            className={`${categoryColors[course.category] || categoryColors.General} text-xs font-medium`}
-          >
-            {course.category}
-          </Badge>
         </div>
       </CardHeader>
-      
-      <CardContent className="pb-4">
-        <CardTitle className="text-lg leading-tight text-card-foreground group-hover:text-primary transition-colors">
+
+      <CardContent className="relative z-10 pb-6 px-6">
+        <CardTitle className="text-2xl font-extrabold leading-tight text-card-foreground group-hover:text-primary transition-colors mb-2 drop-shadow-sm">
           {course.name}
         </CardTitle>
       </CardContent>
-      
-      <CardFooter className="pt-0">
+
+      <CardFooter className="relative z-10 px-6 pb-6 pt-0">
         <Button 
           onClick={handleCourseClick}
           disabled={!course.link}
-          className="w-full bg-primary hover:bg-primary-hover text-primary-foreground shadow-sm group-hover:shadow-button transition-all"
+          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary/80 via-accent/70 to-primary/90 hover:from-primary-hover hover:to-accent-hover text-primary-foreground shadow-lg group-hover:shadow-xl transition-all py-3 rounded-xl text-base font-semibold tracking-wide backdrop-blur-md border border-primary/20"
         >
-          <span>Access Course</span>
-          <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <span className="transition-transform duration-300 group-hover:scale-105">Access Course</span>
+          <ExternalLink className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:scale-110" />
         </Button>
       </CardFooter>
     </Card>
